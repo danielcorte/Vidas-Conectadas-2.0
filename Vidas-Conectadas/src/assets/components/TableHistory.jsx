@@ -74,13 +74,24 @@ const HistoricoDoacoes = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {historicos.map((historico) => (
-                            <tr key={historico.id}>
-                                <td className="border-b p-2">{historico.data}</td>
-                                <td className="border-b p-2">{historico.local}</td>
-                                <td className="border-b p-2">Data a definir</td>
-                            </tr>
-                        ))}
+                        {historicos.map((historico) => {
+                            const dataDoacao = new Date(historico.data);
+                            dataDoacao.setMonth(dataDoacao.getMonth() + 3);
+                            
+                            // Formatar a data no formato YYYY-MM-DD
+                            const ano = dataDoacao.getFullYear();
+                            const mes = String(dataDoacao.getMonth() + 1).padStart(2, '0'); // Mês é 0-indexado
+                            const dia = String(dataDoacao.getDate()).padStart(2, '0');
+                            const dataApto = `${ano}-${mes}-${dia}`;
+
+                            return (
+                                <tr key={historico.id}>
+                                    <td className="border-b p-2">{historico.data}</td>
+                                    <td className="border-b p-2">{historico.local}</td>
+                                    <td className="border-b p-2">{dataApto}</td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
 
